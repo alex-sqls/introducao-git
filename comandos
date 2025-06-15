@@ -1,0 +1,132 @@
+O que é o git?
+ferramentas de sistema de controle de versão: git, cvs, svn, mercurial
+É um sistema de versionamento para um controle individual ou em grupo dos codigos. Ele é essencial para todo o projeto
+
+Uma forma pratica de visualizar o funcionamento do git e seus comandos é com a ferramenta visualizing-git → Visualizing Git (git-school.github.io)
+
+inicializar o git
+dentro do repositorio acessado pelo terminal digite: git init
+git status: mostra as principais informações sobre seu repositorio, como a branch, commits, arquivos monitorados
+git add: preparada os arquivos para o commit
+git add . → prepara todos os arquivos do repositorio para o commit
+git add nome-do-arquivo: prepara o arquivo declarado para o commit
+
+commits
+O commit é uma forma de salvar um estado ou versão do nosso código
+Para commitar determinado arquivo ou projeto segue-se os seguintees passos
+Após ter preparado os arquivos com o git add
+git commit -m “mensagem do commit, deve ser clara o direta”
+
+ps: desde o final de 2020 deve-se usar o nomenclatura da branch principal como main ao invés de master.
+
+Rastreando modificações
+Para rastrear todas as modificações feitas e seus autores, usa-se o comando dentro do repositorio:
+git log: com ele se obtem a hora, autor e o hash do commit
+git log --oneline: mostra as informações de forma resumida
+git log -p: mostra de forma mais detalhada as modificações e commids do repositorio
+git log -n 2 : exibe os dois ultimos commits
+É possivel mostrar as informações do log de diferentes modos, no link a seguir demonstra os comandos para exibir
+git log cheatsheet (devhints.io)
+
+hash: identificação do commit
+head: o commit onde está
+branch: são as arvores de modificação, pode-se ter mais de uma
+
+Modifição do repositorio localmente
+Para modificar a configuração local(no repositorio em questão) utiliza-se o comando:
+git config --local usar.name “nome-do-autor”
+git config --local usar.email “email-do-autor”
+ 
+Ignorando arquivos 
+Para fazer com que o git ignore certos arquivos ou pastas que voce não quer commitar utiliza-se o seguinte modo
+cria-se aum arquivo dentro do repositorio chamado: .gitignore
+.gitignore : e dentro dele voce coloca o nome de todos os arquivos ou pastas que quer ignorar
+
+ps: A recomendação de se fazer um commit é gerar sempre que a nossa base do de codigo esta em um estado em que queremos nos lembrar, quando adicionamos det4erminado funcionalidade ou corrigimos algum bug.
+
+adicionando um repósitorio remoto
+Um repositorio remoto é quando voce vai guardar com segurança seu codigo, para que voce ou outras pessoas o acessem, vejam ou a modifique:
+git remote : lista todos os repositorios remotos do repositorio
+git remote add origin nome-repositorio caminho-repositorio → esse caminho pode ser qualquer coisa, dentro da sua propria maquina ou fora dela
+git remote -v : mostra o endereço do local
+git remote rm nome-repositorio: isso remove o diretorio remoto ou local onde esta vinculado
+git remote nome-atual-repositorio-remote nome-de-sua-escolha → esse comando renomeia o repositorio remoto de seu projeto
+
+git init --bare: Criamos um repositório que não terá a working tree, ou seja, não conterá uma cópia dos nossos arquivos, apenas as alterações. Como o repositório servirá apenas como servidor, para que outros membros da equipe sincronizem seus trabalhos
+
+clonar um repositorio
+Para clonar um repositorio e criar sua propria variação de projeto, utiliza-se a comando
+git clone caminho-do-repositorio
+
+enviar e receber modificações do reposito remoto
+Para isso atuliza-se os comandos push e pull
+git pull repositio-remoto branch-que-quer-trazer-as-modificações
+git push nome-do-repositio-remoto branch-que-quer-enviar-modificações
+
+nota: quando se esta trabalhando em grupo de pessoas, é recomendado sempre fazer o pull para chegar se tem alguma alteração
+
+branches
+As branches de um repositorio são remificações de desenvolvimento de um projeto, seja feito por uma ou mais pessoas para ter uma organização melhor no desenvolvimento
+São linhas de desenvolvimento diferentes
+
+git branch titulo → cria uma ramificação chamada titulo
+git checkout titulo → acessa essa ramificação criada
+git checkout -b lista → cria uma branch chamada lista e seleciona ela
+
+Unindo branches
+É interessante separar o desenvolvimento de funcionalidades em branches diferentes, para que as mudanças no código para uma não influencie no funcionamento de outra
+Na branch principal /padrão ou  a qual queira unir as branch utilize o seguinte comando
+git merge nome-da-branch
+Para  trazer os commits realizados na ramificação
+git rebase titulo
+git log --graph →  detalha os commits da ramificação e da padrão com mais exatidão
+
+nota: O merge junta os trabalhos e gera um merge commit. O rebase aplica os commits de outra branch na branch atual.
+
+Conflitos de merge
+Quando há uma alteração na mesma linha em diferentes branch ao uni-las isso vai gerar um conflito, para resolve-la
+
+desfazendo alterações com o git
+git checkout -- nome-do-arquivo
+como desfazer alterações que já foram marcadas para comittar → git reset HEAD nome-do-arquivo
+desfazendo alterações em estado de commit: git log → para encontrar o hash do commit
+ao identificar o commit → git revert hash-do-commit
+
+guardando alteração para depois
+É possivel guardar trechos de codigos para serem reutilizados futuramente para isso utiliza-se os seguintes comandos:
+Isso de chamado de stash, um local temporario no qual voce pode recuperar depois
+git stash
+git stash list → lista todas as modificações salvas temporariamente
+Para trazer as modificações do stash:
+git stash list → vai listar todas as modificações, junto com sua identificação
+git stash apply referencia-de-identificação-stash
+git stash drop → limpa as modificações do stash
+uma forma mais simplificada de trazer a ultima modificação guardado e ja remove-la do stash é:
+git stash pop
+
+PS: O Stash é utilizado quando precisamos parar o desenvolvimento de algo no meio para trabalhar em outra coisa
+
+viajando no tempo
+Como restaurar o projeto um determinado estado feito em commits anteriores, para isso utilizamos o checkout
+git checkout hash-do-commit
+Quando fizer isso seu HEAd ficara desanexado das arvores/remificaçoes de desenvolvimento, então para manter as alterações ao voltar em commits é necessario criar uma brach
+
+git checkout
+A descrição do comando git checkout --help, em uma tradução livre é: "Atualizar os arquivos na working tree para ficarem na versão especificada. [...]". Basicamente, podemos deixar o nosso código no estado do último commit de uma branch, de um commit específico, ou mesmo tags (que veremos adiante).
+
+vendo as alterações
+É possivel tambem com o auxilio do git ver a diferenças entre commits especificados
+git diff {hash do commit de merge com lista}..{hash do último commit realizado};
+git diff→ mostra alterações ainda não  adicionado ao stage
+
+
+gerando release/tag no git
+Para indicar versões entregaveis  ou marco no git, um marco que não muda mais, a não em versões posteriores
+tags são marcos de um projeto
+git tag -a nome-da-versão -m ”mensagem que queira colocar”
+git tag → lista as versões geradas
+git push nome-repositorio-remoto versao-do-projeto → isso faz o push da versão para o repositorio remoto
+mudar nomes de branchs
+git branch -m master main
+git push -u origin main
+
