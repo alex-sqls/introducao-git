@@ -4,6 +4,8 @@ ferramentas de sistema de controle de versão: git, cvs, svn, mercurial
 
 Uma forma pratica de visualizar o funcionamento do git e seus comandos é com a ferramenta visualizing-git → Visualizing Git (git-school.github.io)
 
+*testando a nova branch
+
 inicializar o git
 dentro do repositorio acessado pelo terminal digite: git init
 git status: mostra as principais informações sobre seu repositorio, como a branch, commits, arquivos monitorados
